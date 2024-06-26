@@ -23,11 +23,11 @@ var receiptStorage = make(map[string]model.Receipt)
 // - application/json
 // responses:
 //
-//	    '200':
-//	        description: Returns the ID assigned to the receipt
-//			   example: { "id": "7fb1377b-b223-49d9-a31a-5a02701dd310" }
-//	    '400':
-//	        description: The receipt is invalid
+//	'200':
+//       description: Returns the ID assigned to the receipt
+//	 example: { "id": "7fb1377b-b223-49d9-a31a-5a02701dd310" }
+//	'400':
+//	 description: The receipt is invalid
 func PostReceipts(c *gin.Context) {
 	var receipt model.Receipt
 
@@ -156,11 +156,11 @@ func validateReceipt(receipt model.Receipt) error {
 // - application/json
 // responses:
 //
-//			'200':
-//	        description: The number of points awarded
-//			   example response: { "points": 32 }
-//			'400':
-//				description: No receipt found for that id
+//	'200':
+//	 description: The number of points awarded
+//	 example response: { "points": 32 }
+//	'400':
+//	 description: No receipt found for that id
 func GetPoints(c *gin.Context) {
 	receiptID := c.Param("id")
 	receipt, exists := receiptStorage[receiptID]
