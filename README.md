@@ -18,7 +18,7 @@ Description: Retrieves points for a processed receipt. \
 Path Parameter:
 id (string): The ID of the receipt obtained from the /receipts/process endpoint.
 
-# Usage
+# To Run
 
 ```
 docker build -t receipt .  
