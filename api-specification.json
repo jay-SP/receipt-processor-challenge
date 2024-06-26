@@ -1,0 +1,140 @@
+{
+    "openapi": "3.0.0",   
+    "info": {
+      "title": "Receipts API",
+      "description": "A simple receipt processor.",
+      "version": "1.0.0"
+    },
+    "servers": [          
+      {
+        "url": "http://localhost:8080/" 
+      }
+    ],
+    "paths": {
+      "/receipts/process": {
+        "post": {
+          "summary": "Process Receipt",
+          "description": "Calculates reward points for a submitted receipt.",
+          "requestBody": {     
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Receipt processed successfully.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Unique identifier for the processed receipt."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid receipt data."
+            }
+          }
+        }
+      },
+      "/receipts/{id}/points": {
+        "get": {
+          "summary": "Get Receipt Points",
+          "description": "Retrieves reward points associated with a receipt ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the receipt to retrieve points for.",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Points successfully retrieved.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "points": {
+                        "type": "integer",
+                        "description": "Total reward points earned for the receipt."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Receipt not found."
+            }
+          }
+        }
+      }
+    },
+    "components": {       
+      "schemas": {
+        "Receipt": {
+          "type": "object",
+          "required": ["retailer", "purchaseDate", "purchaseTime", "items", "total"],
+          "properties": {
+            "retailer": {
+              "type": "string",
+              "description": "The name of the retailer."
+            },
+            "purchaseDate": {
+              "type": "string",
+              "format": "date",
+              "description": "The date of purchase (YYYY-MM-DD)."
+            },
+            "purchaseTime": {
+              "type": "string",
+              "format": "time",
+              "description": "The time of purchase (HH:MM)."
+            },
+            "items": {
+              "type": "array",
+              "description": "An array of items purchased.",
+              "items": {
+                "$ref": "#/components/schemas/Item"
+              }
+            },
+            "total": {
+              "type": "string",
+              "description": "The total cost of the purchase."
+            }
+          }
+        },
+        "Item": {
+          "type": "object",
+          "required": ["shortDescription", "price"],
+          "properties": {
+            "shortDescription": {
+              "type": "string",
+              "description": "A brief description of the item."
+            },
+            "price": {
+              "type": "string",
+              "description": "The price of the item."
+            }
+          }
+        }
+      }
+    }
+  }
+  
